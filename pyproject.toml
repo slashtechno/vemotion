@@ -1,0 +1,26 @@
+[project]
+name = "vemotion"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "slashtechno", email = "77907286+slashtechno@users.noreply.github.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "deepface>=0.0.93",
+    "dynaconf>=3.2.10",
+    "opencv-python>=4.11.0.86",
+    "pydantic>=2.10.6",
+    "slack-sdk>=3.34.0",
+    "tensorflow>=2.18.0",
+    "tensorflow-intel>=2.18.0",
+    "tf-keras>=2.18.0",
+]
+
+[project.scripts]
+vemotion = "vemotion:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
