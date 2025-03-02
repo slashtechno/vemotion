@@ -1,46 +1,10 @@
 from __future__ import annotations
 
-import tensorflow as tf
-from vemotion import settings
-from slack_sdk import WebClient
 from deepface import DeepFace
-import cv2
 from pydantic import BaseModel, Field, computed_field
 from typing import Optional, Tuple
 import numpy as np
 
-def main() -> None:
-    client = WebClient(token=settings.slack_user_token)
-    cap = cv2.VideoCapture(0)
-    ret, frame = cap.read()
-    if not ret: 
-        print("Failed to capture image")
-        return
-    r = analyze_camera(frame)
-    print(r.dominant_emotion)
-    set_status(client, r.dominant_emotion, r.emoji)
-    cap.release()
-    cv2.destroyAllWindows()
-
-
-def set_status(client: WebClient, status_text: str, status_emoji: str) -> None:
-    response = client.users_profile_set(
-        profile={
-            "status_text": status_text,
-            "status_emoji": status_emoji
-        }
-    )
-    assert response["ok"]
-
-def test_message(client: WebClient) -> None:
-    response = client.chat_postMessage(
-        channel="#bot-spam",
-        text="Hello from Python! :tada:",
-    )
-    assert response["message"]["text"] == "Hello from Python! :tada:"
-
-
-# def analyze_camera(cap: cv2.VideoCapture) -> Result:
 def analyze_camera(frame: np.ndarray) -> Result:
     while True:
         # cv2.imshow("frame", frame)
@@ -51,18 +15,6 @@ def analyze_camera(frame: np.ndarray) -> Result:
             continue
         # print(result)
         return Result.model_validate(result)
-
-# form factor: ex. "one liner slack status", "longer slack message"
-def generate_message(dominant_emotion: str, form_factor: str) -> str:
-    prompt: str = f"Generate a sassy but E-rated message for a given emotion and message form factor. Emotion: {dominant_emotion}. Form Factor: {form_factor}." \
-                    + "Additionally, consider the time of day: {}"
-    pass
-
-def get_weather() -> str:
-    pass
-
-def get_time() -> str:
-    pass
 
 class EmotionScores(BaseModel):
     angry: float
@@ -105,7 +57,3 @@ class Result(BaseModel):
                 return ":astonished:"
             case "neutral":
                 return ":neutral_face:"
-
-
-if __name__ == "__main__":
-    main()

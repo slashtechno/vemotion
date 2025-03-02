@@ -11,9 +11,10 @@ settings.validators.register(
     validators=[
         Validator(
             "slack_user_token",
-            must_exist=True,
-            condition=lambda x: x.startswith("xoxp-"),
-            messages={"condition": "Must start with 'xoxb-'"},
+            # must_exist=True,
+            # condition=lambda x: x.startswith("xoxp-"),
+            # messages={"condition": "Must start with 'xoxb-'"},
+            default="",
         ),
         # Validator(
         #     "slack_app_token",
@@ -25,6 +26,15 @@ settings.validators.register(
             "status_prefix",
             default="",
         ),
+        Validator(
+            "db_path",
+            default="db.json",
+        ),
+        Validator(
+            "frontend_url",
+            default="https://vemotion.angad.me",
+        ),
+        
     ],
 )
 
