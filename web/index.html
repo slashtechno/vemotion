@@ -23,7 +23,7 @@
             return getParameterByName('session_id');
         }
 
-        const backendUrl = "https://localhost:8443";
+        const backendUrl = "https://vemotion.angad.me/api";
 
         document.getElementById('login').href = "https://slack.com/oauth/v2/authorize?scope=&user_scope=chat%3Awrite%2Cusers.profile%3Awrite&redirect_uri=" + encodeURIComponent(backendUrl + "/oauth/callback") + "&client_id=2210535565.8534326651635";
         
