@@ -12,11 +12,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from vemotion import settings
 from vemotion.consts import SLACK_OAUTH_ACCESS_URL, SLACK_OAUTH_REDIRECT_URI
 from vemotion.cv import cv
-import base64
-import numpy as np
-import cv2
-from io import BytesIO
-from PIL import Image
 
 # SLACK_CLIENT_ID = settings.slack_client_id
 # SLACK_OAUTH_REDIRECT_URI = "https://localhost:8443/oauth/callback"

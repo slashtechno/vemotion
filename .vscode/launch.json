@@ -14,18 +14,11 @@
       "preLaunchTask": "caddy"
     },
 
-    {
-      "name": "client",
-      "type": "debugpy",
-      "request": "launch",
-      "module": "src.vemotion.frontend"
-    },
-
   ],
   "compounds": [
     {
       "name": "All",
-      "configurations": ["server", "client"]
+      "configurations": ["server"],
     }
   ]
 }
