@@ -25,6 +25,18 @@ settings.validators.register(
             "status_prefix",
             default="",
         ),
+        Validator(
+            "google_api_key",
+            must_exist=True,
+        ),
+        Validator(
+            "ipinfo_api_key",
+            must_exist=True,
+        ),
+        Validator(
+            "weather_api_key",
+            must_exist=True,
+        ),
     ],
 )
 
