@@ -51,8 +51,8 @@
             const video = document.getElementById('camera');
             const canvas = document.createElement('canvas');
             const scaleFactor = 0.25; // Adjust this value to resize the image
-            canvas.width = video.videoWidth * scaleFactor;
-            canvas.height = video.videoHeight * scaleFactor;
+            canvas.width = 160;
+            canvas.height = 120;
             const context = canvas.getContext('2d');
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
             const imageData = canvas.toDataURL('image/png');
