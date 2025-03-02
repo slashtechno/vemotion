@@ -1,0 +1,13 @@
+services:
+  vemotion:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./src:/app/src
+      - ./settings.toml:/app/settings.toml
+      - ./.secrets.toml:/app/.secrets.toml
+      - ./db.json:/app/db.json
+    restart: unless-stopped

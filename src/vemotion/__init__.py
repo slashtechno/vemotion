@@ -1,4 +1,4 @@
 from vemotion.config import settings as settings
-from vemotion.frontend import __main__
+from vemotion.backend.main import main as m
 def main() -> None:
-    __main__.main()
+    m()

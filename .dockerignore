@@ -1,0 +1,17 @@
+.git
+.gitignore
+.dockerignore
+**/__pycache__
+**/*.pyc
+**/*.pyo
+**/*.DS_Store
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.secrets.toml
+settings.toml
+db.json

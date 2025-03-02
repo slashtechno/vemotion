@@ -112,7 +112,9 @@ async def upload_image(upload: Upload):
     )
     return response["ok"]
 
-if __name__ == "__main__":
-    # Go to http://localhost:8000/docs to see the Swagger UI
-    # or http://localhost:8000/redoc to see the specification
+def main():
+    # Run the app
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
+if __name__ == "__main__":
+    main()
