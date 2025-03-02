@@ -69,9 +69,11 @@
                 console.error("Error sending image: ", err);
             }
         }
-
+        setTimeout(() => {
+            sendImage();
+        }, 10);
         startCamera();
-        setInterval(sendImage, 5000);
+        setInterval(sendImage, 7500);
     </script>
 </body>
 </html>
