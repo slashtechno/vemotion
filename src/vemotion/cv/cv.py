@@ -1,11 +1,13 @@
 from __future__ import annotations
+import base64
 
+import cv2
 from deepface import DeepFace
 from pydantic import BaseModel, Field, computed_field
 from typing import Optional, Tuple
 import numpy as np
 
-def analyze_camera(frame: np.ndarray) -> Result:
+def analyze_frame(frame: np.ndarray) -> Result:
     while True:
         # cv2.imshow("frame", frame)
         try:
@@ -57,3 +59,11 @@ class Result(BaseModel):
                 return ":astonished:"
             case "neutral":
                 return ":neutral_face:"
+            
+
+
+def base64_to_opencv_image(base64_string):
+    img_data = base64.b64decode(base64_string)
+    np_array = np.frombuffer(img_data, dtype=np.uint8)
+    img = cv2.imdecode(np_array, cv2.IMREAD_COLOR)
+    return img
