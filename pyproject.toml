@@ -17,6 +17,8 @@ dependencies = [
     "tensorflow>=2.18.0",
     "tensorflow-intel>=2.18.0",
     "tf-keras>=2.18.0",
+    "ipinfo",
+    "git+https://github.com/weatherapicom/python.git#egg=weatherapipython"
 ]
 
 [project.scripts]
