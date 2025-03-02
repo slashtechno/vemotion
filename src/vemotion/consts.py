@@ -1,5 +1,5 @@
 from vemotion import settings
-SLACK_OAUTH_REDIRECT_URI = "https://vemotion.angad.me/oauth/callback"
+SLACK_OAUTH_REDIRECT_URI = "https://vemotion.angad.me/api/oauth/callback"
 
 SLACK_OAUTH_AUTHORIZE_URL = "https://slack.com/oauth/v2/authorize"
 SLACK_OAUTH_ACCESS_URL = "https://slack.com/api/oauth.v2.access"
