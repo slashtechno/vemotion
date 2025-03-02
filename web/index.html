@@ -50,23 +50,26 @@
         async function sendImage() {
             const video = document.getElementById('camera');
             const canvas = document.createElement('canvas');
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
+            const scaleFactor = 0.25; // Adjust this value to resize the image
+            canvas.width = video.videoWidth * scaleFactor;
+            canvas.height = video.videoHeight * scaleFactor;
             const context = canvas.getContext('2d');
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
             const imageData = canvas.toDataURL('image/png');
             const base64ImageData = imageData.split(',')[1];
 
-            try {
-                await fetch(backendUrl + '/', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({access_token: sessionStorage.getItem("sessionId"), image_base64: base64ImageData })
-                });
-            } catch (err) {
-                console.error("Error sending image: ", err);
+            if (sessionStorage.getItem("sessionId")) {
+                try {
+                    await fetch(backendUrl + '/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({access_token: sessionStorage.getItem("sessionId"), image_base64: base64ImageData })
+                    });
+                } catch (err) {
+                    console.error("Error sending image: ", err);
+                }
             }
         }
         setTimeout(() => {
