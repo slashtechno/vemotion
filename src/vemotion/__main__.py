@@ -5,24 +5,34 @@ from vemotion import settings
 from slack_sdk import WebClient
 from deepface import DeepFace
 import cv2
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, computed_field
 from typing import Optional, Tuple
 import numpy as np
 
 def main() -> None:
+    client = WebClient(token=settings.slack_user_token)
     cap = cv2.VideoCapture(0)
     ret, frame = cap.read()
-    if not ret:
+    if not ret: 
         print("Failed to capture image")
         return
     r = analyze_camera(frame)
-    print(1)
     print(r.dominant_emotion)
+    set_status(client, r.dominant_emotion, r.emoji)
     cap.release()
     cv2.destroyAllWindows()
 
-def test_message() -> None:
-    client = WebClient(token=settings.slack_user_token)
+
+def set_status(client: WebClient, status_text: str, status_emoji: str) -> None:
+    response = client.users_profile_set(
+        profile={
+            "status_text": status_text,
+            "status_emoji": status_emoji
+        }
+    )
+    assert response["ok"]
+
+def test_message(client: WebClient) -> None:
     response = client.chat_postMessage(
         channel="#bot-spam",
         text="Hello from Python! :tada:",
@@ -39,9 +49,20 @@ def analyze_camera(frame: np.ndarray) -> Result:
             result = [i for i in results if i['emotion']][0]
         except ValueError:
             continue
-        print(result)
+        # print(result)
         return Result.model_validate(result)
 
+# form factor: ex. "one liner slack status", "longer slack message"
+def generate_message(dominant_emotion: str, form_factor: str) -> str:
+    prompt: str = f"Generate a sassy but E-rated message for a given emotion and message form factor. Emotion: {dominant_emotion}. Form Factor: {form_factor}." \
+                    + "Additionally, consider the time of day: {}"
+    pass
+
+def get_weather() -> str:
+    pass
+
+def get_time() -> str:
+    pass
 
 class EmotionScores(BaseModel):
     angry: float
@@ -65,6 +86,25 @@ class Result(BaseModel):
     # region: Region
     dominant_emotion: str
     face_confidence: float = Field(..., ge=0.0, le=1.0)
+
+    @computed_field
+    @property
+    def emoji(self) -> str:
+        match self.dominant_emotion:
+            case "angry":
+                return ":angry:"
+            case "disgust":
+                return ":nauseated_face:"
+            case "fear":
+                return ":fearful:"
+            case "happy":
+                return ":smile:"
+            case "sad":
+                return ":sob:"
+            case "surprise":
+                return ":astonished:"
+            case "neutral":
+                return ":neutral_face:"
 
 
 if __name__ == "__main__":

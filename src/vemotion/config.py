@@ -21,6 +21,10 @@ settings.validators.register(
         #     condition=lambda x: x.startswith("xapp-"),
         #     messages={"condition": "Must start with 'xapp-'"},
         # ),
+            Validator(
+            "status_prefix",
+            default="",
+        ),
     ],
 )
 
